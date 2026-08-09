@@ -1,16 +1,10 @@
 # tuazon_advmobprog
 
-A new Flutter project.
+# Laboratory Activity 2
 
-## Getting Started
+Discussion
 
-This project is a starting point for a Flutter application.
+The Product model is used to organize the data from the API. It uses Product.fromJson() to convert the JSON data into a Dart object. The ProductService is responsible for getting the data from the API using http.get() and returning a List<Product>, so the UI doesn't need to handle network requests. The ProductScreen calls the service in initState(), then uses setState() to update the screen and display the products.
 
-A few resources to get you started if this is your first Flutter project:
+The design pattern used is separation of concerns, where each file has its own responsibility. This makes the code easier to understand and maintain. It also uses a factory constructor for JSON conversion, Future and async/await for loading data without freezing the app, and the Provider pattern to manage the app's theme. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
