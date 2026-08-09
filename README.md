@@ -1,10 +1,16 @@
 # tuazon_advmobprog
 
-# Laboratory Activity 1
+A new Flutter project.
 
-## Discussion
+## Getting Started
 
-setState is a simple way to update the UI when something changes in just one widget. It's best
-for small apps or when only a small part of the app needs to change. On the other hand, Provider is
-used to manage and share data between different widgets more easily. It is more useful for bigger
-apps because it helps keep the code cleaner and more organized
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
