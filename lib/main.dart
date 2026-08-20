@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/product_detail_screen.dart';
+import 'screens/signin_screen.dart';
+import 'screens/splash_screen.dart';
 import 'poviders/theme_provider.dart';
 
 void main() async {
@@ -44,6 +46,8 @@ class TuazonAdvMobProg extends StatelessWidget {
               '/home': (context) => const HomeScreen(),
               '/settings': (context) => const SettingsScreen(),
               '/product-detail': (context) => const ProductDetailScreen(),
+              '/signin': (context) => const SignInScreen(),
+              '/splash': (context) => const SplashScreen(),
             },
           );
         },

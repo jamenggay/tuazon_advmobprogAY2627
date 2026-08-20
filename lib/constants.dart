@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final String host = dotenv.env['HOST'] ?? 'https://dummyjson.com';
+final String host = dotenv.env['HOST'] ??
+    dotenv.env['BASE_URL'] ??
+    'https://dummyjson.com';
 
 // The id of the user 
 const int currentUserId = 1;
