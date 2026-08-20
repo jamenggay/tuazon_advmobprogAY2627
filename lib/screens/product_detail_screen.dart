@@ -52,7 +52,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get color theme information from context
+    // Get color theme 
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -121,9 +121,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
+      // The Add to Cart pinned at bottom of the screen
+      bottomNavigationBar: _buildAddToCartBar(product, theme, isDark),
       body: CustomScrollView(
         slivers: [
-          // Elegant transparent App Bar with Hero Image
+          //app bar hero
           SliverAppBar(
             expandedHeight: 350.h,
             pinned: true,
@@ -447,6 +449,46 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ]),
           ),
         ],
+      ),
+    );
+  }
+
+  // the bar at the bottom that has the Add to Cart button
+  Widget _buildAddToCartBar(Product product, ThemeData theme, bool isDark) {
+    // We cannot add a product that has no stock left
+    final isOutOfStock = product.stock <= 0;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      decoration: BoxDecoration(
+        color: theme.cardTheme.color,
+        border: Border(
+          top: BorderSide(
+            color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+          ),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          width: double.infinity,
+          height: 48.h,
+          //add to cart btn
+          child: ElevatedButton.icon(
+            onPressed: () {},
+            icon: Icon(Icons.add_shopping_cart, size: 20.sp),
+            label: CustomText(
+              text: isOutOfStock ? 'Out of Stock' : 'Add to Cart',
+              fontSize: 15.sp,
+              fontWeight: FontWeight.bold,
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

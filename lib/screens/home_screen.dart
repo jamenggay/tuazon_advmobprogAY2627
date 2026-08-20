@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'cart_screen.dart';
 import 'product_screen.dart';
 import '../constants.dart';
 import '../widgets/custom_text.dart';
@@ -17,6 +18,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
+
+  // cart page index saved in a variable.
+  static const int _cartPageIndex = 1;
 
   @override
   void dispose() {
@@ -43,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   scale: 11.5.sp,
                 )
               : CustomText(
-                  text: _selectedIndex == 1 ? 'Chat' : 'Profile',
+                  text: _selectedIndex == _cartPageIndex ? 'Cart' : 'Profile',
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
                   color: onAppBar,
@@ -60,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: _pageController,
           children: const <Widget>[
             ProductScreen(),
-            SizedBox.expand(),
+            CartScreen(),
             SizedBox.expand(),
           ],
           onPageChanged: (page) {
@@ -69,6 +73,20 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
         ),
+ 
+        //chat icon navigation -> floating icon
+        floatingActionButton: _selectedIndex == _cartPageIndex
+            ? null
+            : FloatingActionButton(
+                backgroundColor: theme.colorScheme.primary,
+                onPressed: _onChatPressed,
+                tooltip: 'Chat',
+                child: Icon(
+                  Icons.chat,
+                  size: 24.sp,
+                  color: theme.colorScheme.onPrimary,
+                ),
+              ),
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: true,
           showUnselectedLabels: false,
@@ -84,8 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Shop',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
-              label: 'Chat',
+              icon: Icon(Icons.shopping_cart),
+              label: 'Cart',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
@@ -96,6 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  // for chat icon on press function (wala pa function for now)
+  void _onChatPressed() {
+   
   }
 
   void _onTappedBar(int value) {

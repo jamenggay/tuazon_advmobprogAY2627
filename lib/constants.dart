@@ -3,7 +3,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final String host = dotenv.env['HOST'] ?? 'https://dummyjson.com';
 
-/// App-wide color palette.
+// The id of the user 
+const int currentUserId = 1;
+
+///color palette.
 class AppColors {
   AppColors._();
 

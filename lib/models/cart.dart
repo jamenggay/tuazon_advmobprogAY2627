@@ -50,10 +50,10 @@ class CartProduct {
   final int id;
   final String title;
   final double price;
-  final int quantity;
-  final double total;
+  int quantity;
+  double total;
   final double discountPercentage;
-  final double discountedTotal;
+  double discountedTotal;
   final String thumbnail;
 
   CartProduct({
@@ -80,6 +80,13 @@ class CartProduct {
           (json['discountedTotal'] as num?)?.toDouble() ?? 0.0,
       thumbnail: json['thumbnail'] ?? '',
     );
+  }
+
+  // Saves the new quantity and computes the prices for total
+  void updateQuantity(int newQuantity) {
+    quantity = newQuantity;
+    total = price * newQuantity;
+    discountedTotal = total - (total * discountPercentage / 100);
   }
 
   Map<String, dynamic> toJson() {
