@@ -5,8 +5,6 @@ final String host = dotenv.env['HOST'] ??
     dotenv.env['BASE_URL'] ??
     'https://dummyjson.com';
 
-// The id of the user 
-const int currentUserId = 1;
 
 ///color palette.
 class AppColors {

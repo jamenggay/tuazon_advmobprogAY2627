@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'cart_screen.dart';
 import 'product_screen.dart';
+import 'profile_screen.dart';
 import '../constants.dart';
 import '../widgets/custom_text.dart';
 
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: const <Widget>[
             ProductScreen(),
             CartScreen(),
-            SizedBox.expand(),
+            ProfileScreen(),
           ],
           onPageChanged: (page) {
             setState(() {

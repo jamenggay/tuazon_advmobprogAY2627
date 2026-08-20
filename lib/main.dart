@@ -40,8 +40,13 @@ class TuazonAdvMobProg extends StatelessWidget {
             theme: themeModel.lightTheme,
             darkTheme: themeModel.darkTheme,
             themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
-            title: 'E-Commerce App',
-            initialRoute: '/home',
+            title: 'NU Online Shopping Center',
+            // ENHANCEMENT 1
+            // The app opens the sign in screen first. That screen checks if
+            // a token is already saved, and if there is one it skips the
+            // form and goes straight to the splash screen.
+            // The order is: signin  ->  splash  ->  home
+            initialRoute: '/signin',
             routes: {
               '/home': (context) => const HomeScreen(),
               '/settings': (context) => const SettingsScreen(),

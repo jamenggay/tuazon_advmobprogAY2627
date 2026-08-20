@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
 import '../models/cart.dart';
 import '../services/cart_service.dart';
+import '../services/user_service.dart';
 import '../widgets/custom_text.dart';
 
 // shows the cart of the user 
@@ -16,12 +17,13 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   // talks to the API
   final CartService _cartService = CartService();
+  // ENHANCEMENT 3
+  // used user service to load the specific user's own cart
+  final UserService _userService = UserService();
 
   // stores the cart items from the API.
   Cart? _cart;
-  // True while waiting sa API
   bool _isLoading = true;
-  // error text if the API call failed
   String _errorMessage = '';
 
   @override
@@ -39,11 +41,11 @@ class _CartScreenState extends State<CartScreen> {
     });
 
     try {
-      // request for the carts 
-      final carts = await _cartService.getCartsByUserId(currentUserId);
+      // Read the saved user first, then use their id to get their cart.
+      final user = await _userService.getUser();
+      final carts = await _cartService.getCartsByUserId(user.id);
       if (!mounted) return;
       setState(() {
-        // takes the first cart
         _cart = carts.isNotEmpty ? carts.first : null;
         _isLoading = false;
       });
