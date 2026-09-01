@@ -12,6 +12,7 @@ import 'screens/splash_screen.dart';
 import 'poviders/theme_provider.dart';
 
 void main() async {
+  // Start the app with required device settings and environment setup.
   WidgetsFlutterBinding.ensureInitialized();
 
   await SystemChrome.setPreferredOrientations([
@@ -26,6 +27,7 @@ class TuazonAdvMobProg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // App-wide theme and route setup for the whole application.
     return ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: ScreenUtilInit(

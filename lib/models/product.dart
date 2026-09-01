@@ -1,3 +1,4 @@
+// Data model for a product returned by the API.
 class Product {
   final int id;
   final String title;
@@ -46,7 +47,9 @@ class Product {
     required this.images,
     required this.thumbnail,
   });
-factory Product.fromJson(Map<String, dynamic> json) {
+
+  // Converts API JSON into a Product object.
+  factory Product.fromJson(Map<String, dynamic> json) {
   return Product(
     id: json['id'] ?? 0,
     title: json['title'] ?? '',

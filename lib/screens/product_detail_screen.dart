@@ -13,6 +13,7 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  // Stores the selected product and loading state for the detail page.
   final ProductService _productService = ProductService();
   Product? _product;
   bool _isLoading = true;
@@ -31,6 +32,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
+  // Loads one product based on the ID passed from the previous screen.
   Future<void> _loadProductDetails(int id) async {
     setState(() {
       _isLoading = true;

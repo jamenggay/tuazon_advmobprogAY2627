@@ -8,6 +8,7 @@ import '../constants.dart';
 import '../widgets/custom_text.dart';
 
 class HomeScreen extends StatefulWidget {
+  // Main screen with shop, cart, and profile tabs.
   final String username;
 
   const HomeScreen({super.key, this.username = ''});
@@ -117,11 +118,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // for chat icon on press function (wala pa function for now)
+  // Placeholder action for the floating chat button.
   void _onChatPressed() {
    
   }
 
+  // Switches the selected tab and updates the visible page.
   void _onTappedBar(int value) {
     setState(() {
       _selectedIndex = value;

@@ -13,6 +13,7 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  // Holds the product list and fetch state for the catalog screen.
   final ProductService _productService = ProductService();
 
   List<Product> _allProducts = [];
@@ -26,6 +27,7 @@ class _ProductScreenState extends State<ProductScreen> {
     _loadProducts();
   }
 
+  // Fetches products from the API and updates the screen state.
   Future<void> _loadProducts() async {
     setState(() {
       _isLoading = true;
@@ -203,6 +205,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
+  // Shows one product in a card with image, rating, and price.
   Widget _buildProductCard(BuildContext context, Product product, ThemeData theme, bool isDark) {
     return Card(
       elevation: 0,

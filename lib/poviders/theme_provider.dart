@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class ThemeProvider with ChangeNotifier {
-  // Stores the selected theme mode.
+  // Controls the app-wide light and dark color theme.
   bool _isDark = false;
   bool get isDark => _isDark;
 

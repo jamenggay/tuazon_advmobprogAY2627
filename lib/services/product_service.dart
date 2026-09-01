@@ -6,6 +6,7 @@ import '../constants.dart';
 import '../models/product.dart';
 import '../models/product_category.dart';
 
+// Fetches product data from the backend API.
 class ProductService {
   // Loads all products.
   Future<List<Product>> getAllProducts() async {
