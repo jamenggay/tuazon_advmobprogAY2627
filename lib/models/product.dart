@@ -78,7 +78,7 @@ factory Product.fromJson(Map<String, dynamic> json) {
   );
 }
 
-  // Calculates the average rating of product reviews. Uses default rating if empty.
+  // Returns the average review rating.
   double get averageReviewRating {
     if (reviews.isEmpty) return rating;
     final sum = reviews.fold<double>(0.0, (sum, review) => sum + review.rating);

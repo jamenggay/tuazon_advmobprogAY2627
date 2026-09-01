@@ -7,18 +7,17 @@ import '../models/product.dart';
 import '../models/product_category.dart';
 
 class ProductService {
-  // Call API to get all products
+  // Loads all products.
   Future<List<Product>> getAllProducts() async {
     return _getProducts(Uri.parse('$host/products'));
   }
 
-  /// Products belonging to a single category.
-  // Call API to get products by category slug
+  // Loads products in a category.
   Future<List<Product>> getProductsByCategory(String slug) async {
     return _getProducts(Uri.parse('$host/products/category/$slug'));
   }
 
-  // Call API to get list of categories
+  // Loads product categories.
   Future<List<ProductCategory>> getCategories() async {
     final response = await http.get(Uri.parse('$host/products/categories'));
 
@@ -37,7 +36,7 @@ class ProductService {
         .toList();
   }
 
-  // Helper method to download and parse product list data
+  // Downloads and parses a product list.
   Future<List<Product>> _getProducts(Uri uri) async {
     final response = await http.get(uri);
 
@@ -61,7 +60,7 @@ class ProductService {
         .toList();
   }
 
-  // Call API to get a single product details by id
+  // Loads one product by ID.
   Future<Product> getProductById(int id) async {
     final response = await http.get(Uri.parse('$host/products/$id'));
 

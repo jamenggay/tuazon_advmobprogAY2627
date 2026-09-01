@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class ThemeProvider with ChangeNotifier {
-  // Checks if the app is currently in dark mode
+  // Stores the selected theme mode.
   bool _isDark = false;
   bool get isDark => _isDark;
 
-  // Configuration for the light mode theme
+  // Defines the light theme.
   ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.teal,
-          primary: AppColors.teal, // #007979
+          primary: AppColors.teal,
           onPrimary: Colors.white,
-          secondary: AppColors.ember, // #E37434
+          secondary: AppColors.ember,
           onSecondary: Colors.white,
-          tertiary: AppColors.tealLight, // #24B1B1
+          tertiary: AppColors.tealLight,
           error: AppColors.error,
         ).copyWith(
-          primaryContainer: AppColors.sand, // #FFE2AF
+          primaryContainer: AppColors.sand,
           onPrimaryContainer: AppColors.tealDeep,
           secondaryContainer: AppColors.sand,
           onSecondaryContainer: AppColors.emberDeep,
@@ -53,18 +53,18 @@ class ThemeProvider with ChangeNotifier {
         ),
       );
 
-  // Configuration for the dark mode theme
+  // Defines the dark theme.
   ThemeData get darkTheme => ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.teal,
           brightness: Brightness.dark,
-          primary: AppColors.tealLight, // #24B1B1
+          primary: AppColors.tealLight,
           onPrimary: AppColors.tealDeep,
-          secondary: AppColors.ember, // #E37434
+          secondary: AppColors.ember,
           onSecondary: Colors.white,
-          tertiary: AppColors.sand, // #FFE2AF
+          tertiary: AppColors.sand,
           error: AppColors.errorLight,
         ).copyWith(
           primaryContainer: AppColors.tealDeep,
@@ -100,7 +100,7 @@ class ThemeProvider with ChangeNotifier {
         ),
       );
 
-  // Switches between light and dark mode and updates the UI
+  // Switches the app theme.
   void toggleTheme() {
     _isDark = !_isDark;
     notifyListeners();

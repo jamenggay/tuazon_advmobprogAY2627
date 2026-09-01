@@ -82,7 +82,7 @@ class CartProduct {
     );
   }
 
-  // Saves the new quantity and computes the prices for total
+  // Updates the item quantity and totals.
   void updateQuantity(int newQuantity) {
     quantity = newQuantity;
     total = price * newQuantity;
