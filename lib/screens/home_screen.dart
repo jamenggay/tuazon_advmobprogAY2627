@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
         ),
- 
+
         //chat icon navigation -> floating icon
         floatingActionButton: _selectedIndex == _cartPageIndex
             ? null
@@ -93,24 +93,19 @@ class _HomeScreenState extends State<HomeScreen> {
           showSelectedLabels: true,
           showUnselectedLabels: false,
           selectedItemColor: theme.colorScheme.primary,
-          unselectedItemColor:
-              isDark ? AppColors.darkMuted : AppColors.lightMuted,
+          unselectedItemColor: isDark
+              ? AppColors.darkMuted
+              : AppColors.lightMuted,
           backgroundColor: isDark ? AppColors.darkCard : AppColors.lightCard,
           type: BottomNavigationBarType.fixed,
           onTap: _onTappedBar,
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shop_2),
-              label: 'Shop',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.shop_2), label: 'Shop'),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart),
               label: 'Cart',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
           currentIndex: _selectedIndex,
         ),
@@ -119,9 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Placeholder action for the floating chat button.
-  void _onChatPressed() {
-   
-  }
+  void _onChatPressed() {}
 
   // Switches the selected tab and updates the visible page.
   void _onTappedBar(int value) {

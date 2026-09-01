@@ -50,36 +50,36 @@ class Product {
 
   // Converts API JSON into a Product object.
   factory Product.fromJson(Map<String, dynamic> json) {
-  return Product(
-    id: json['id'] ?? 0,
-    title: json['title'] ?? '',
-    description: json['description'] ?? '',
-    category: json['category'] ?? '',
-    price: (json['price'] as num?)?.toDouble() ?? 0.0,
-    discountPercentage:
-        (json['discountPercentage'] as num?)?.toDouble() ?? 0.0,
-    rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-    stock: json['stock'] ?? 0,
-    tags: List<String>.from(json['tags'] ?? []),
-    brand: json['brand'] ?? '',
-    sku: json['sku'] ?? '',
-    weight: (json['weight'] as num?)?.toDouble() ?? 0.0,
-    dimensions:
-        ProductDimensions.fromJson(json['dimensions'] ?? {}),
-    warrantyInformation: json['warrantyInformation'] ?? '',
-    shippingInformation: json['shippingInformation'] ?? '',
-    availabilityStatus: json['availabilityStatus'] ?? '',
-    reviews: (json['reviews'] as List?)
-            ?.map((e) => ProductReview.fromJson(e))
-            .toList() ??
-        [],
-    returnPolicy: json['returnPolicy'] ?? '',
-    minimumOrderQuantity: json['minimumOrderQuantity'] ?? 0,
-    meta: ProductMeta.fromJson(json['meta'] ?? {}),
-    images: List<String>.from(json['images'] ?? []),
-    thumbnail: json['thumbnail'] ?? '',
-  );
-}
+    return Product(
+      id: json['id'] ?? 0,
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      category: json['category'] ?? '',
+      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      discountPercentage:
+          (json['discountPercentage'] as num?)?.toDouble() ?? 0.0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      stock: json['stock'] ?? 0,
+      tags: List<String>.from(json['tags'] ?? []),
+      brand: json['brand'] ?? '',
+      sku: json['sku'] ?? '',
+      weight: (json['weight'] as num?)?.toDouble() ?? 0.0,
+      dimensions: ProductDimensions.fromJson(json['dimensions'] ?? {}),
+      warrantyInformation: json['warrantyInformation'] ?? '',
+      shippingInformation: json['shippingInformation'] ?? '',
+      availabilityStatus: json['availabilityStatus'] ?? '',
+      reviews:
+          (json['reviews'] as List?)
+              ?.map((e) => ProductReview.fromJson(e))
+              .toList() ??
+          [],
+      returnPolicy: json['returnPolicy'] ?? '',
+      minimumOrderQuantity: json['minimumOrderQuantity'] ?? 0,
+      meta: ProductMeta.fromJson(json['meta'] ?? {}),
+      images: List<String>.from(json['images'] ?? []),
+      thumbnail: json['thumbnail'] ?? '',
+    );
+  }
 
   // Returns the average review rating.
   double get averageReviewRating {
@@ -88,6 +88,7 @@ class Product {
     return sum / reviews.length;
   }
 }
+
 class ProductDimensions {
   final double width;
   final double height;
@@ -107,6 +108,7 @@ class ProductDimensions {
     );
   }
 }
+
 class ProductReview {
   final int rating;
   final String comment;

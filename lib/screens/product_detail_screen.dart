@@ -54,7 +54,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get color theme 
+    // Get color theme
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -65,7 +65,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: isDark ? AppColors.sand : AppColors.tealDeep),
+            icon: Icon(
+              Icons.arrow_back,
+              color: isDark ? AppColors.sand : AppColors.tealDeep,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -80,7 +83,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: isDark ? AppColors.sand : AppColors.tealDeep),
+            icon: Icon(
+              Icons.arrow_back,
+              color: isDark ? AppColors.sand : AppColors.tealDeep,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -90,7 +96,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.error_outline_rounded, size: 64.sp, color: theme.colorScheme.error),
+                Icon(
+                  Icons.error_outline_rounded,
+                  size: 64.sp,
+                  color: theme.colorScheme.error,
+                ),
                 SizedBox(height: 16.h),
                 CustomText(
                   text: 'Failed to load details',
@@ -99,14 +109,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 SizedBox(height: 8.h),
                 CustomText(
-                  text: _errorMessage.isEmpty ? 'Product details not available' : _errorMessage,
+                  text: _errorMessage.isEmpty
+                      ? 'Product details not available'
+                      : _errorMessage,
                   fontSize: 13.sp,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20.h),
                 ElevatedButton.icon(
                   onPressed: () {
-                    final productId = ModalRoute.of(context)!.settings.arguments as int;
+                    final productId =
+                        ModalRoute.of(context)!.settings.arguments as int;
                     _loadProductDetails(productId);
                   },
                   icon: const Icon(Icons.refresh),
@@ -139,8 +152,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ? AppColors.darkCard.withValues(alpha: 0.75)
                     : AppColors.lightCard.withValues(alpha: 0.8),
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back,
-                      color: isDark ? AppColors.sand : AppColors.tealDeep, size: 20.sp),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: isDark ? AppColors.sand : AppColors.tealDeep,
+                    size: 20.sp,
+                  ),
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
@@ -167,7 +183,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: CustomText(
-                            text: _isFavorite ? 'Added to Wishlist' : 'Removed from Wishlist',
+                            text: _isFavorite
+                                ? 'Added to Wishlist'
+                                : 'Removed from Wishlist',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
@@ -187,31 +205,44 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       color: theme.cardTheme.color,
                       child: product.images.isEmpty
                           ? Center(
-                              child: Icon(Icons.image,
-                                  size: 80.sp,
-                                  color: isDark
-                                      ? AppColors.darkMuted
-                                      : AppColors.lightMuted))
+                              child: Icon(
+                                Icons.image,
+                                size: 80.sp,
+                                color: isDark
+                                    ? AppColors.darkMuted
+                                    : AppColors.lightMuted,
+                              ),
+                            )
                           : Image.network(
                               product.images.first,
                               fit: BoxFit.contain,
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                );
-                              },
-                              errorBuilder: (context, error, stackTrace) => Center(
-                                  child: Icon(Icons.broken_image,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value:
+                                            loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Center(
+                                    child: Icon(
+                                      Icons.broken_image,
                                       size: 80.sp,
                                       color: isDark
                                           ? AppColors.darkMuted
-                                          : AppColors.lightMuted)),
+                                          : AppColors.lightMuted,
+                                    ),
+                                  ),
                             ),
                     ),
                   ),
@@ -249,7 +280,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.h,
+                          ),
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(6.r),
@@ -294,19 +328,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Row(
                       children: [
                         Icon(
-                          product.stock > 0 ? Icons.check_circle_outline : Icons.remove_circle_outline,
+                          product.stock > 0
+                              ? Icons.check_circle_outline
+                              : Icons.remove_circle_outline,
                           color: product.stock > 10
                               ? theme.colorScheme.primary
                               : (product.stock > 0
-                                  ? AppColors.ember
-                                  : theme.colorScheme.error),
+                                    ? AppColors.ember
+                                    : theme.colorScheme.error),
                           size: 18.sp,
                         ),
                         SizedBox(width: 4.w),
                         CustomText(
                           text: product.stock > 10
                               ? 'In Stock (${product.stock})'
-                              : (product.stock > 0 ? 'Low Stock (${product.stock} left)' : 'Out of Stock'),
+                              : (product.stock > 0
+                                    ? 'Low Stock (${product.stock} left)'
+                                    : 'Out of Stock'),
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -334,8 +372,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       children: [
                         _buildSpecRow('SKU', product.sku),
                         _buildSpecRow('Weight', '${product.weight} kg'),
-                        _buildSpecRow('Dimensions',
-                            '${product.dimensions.width}W x ${product.dimensions.height}H x ${product.dimensions.depth}D cm'),
+                        _buildSpecRow(
+                          'Dimensions',
+                          '${product.dimensions.width}W x ${product.dimensions.height}H x ${product.dimensions.depth}D cm',
+                        ),
                         _buildSpecRow('Warranty', product.warrantyInformation),
                       ],
                       theme: theme,
@@ -346,9 +386,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     _buildSectionCard(
                       title: 'Delivery & Return',
                       children: [
-                        _buildSpecRow('Shipping info', product.shippingInformation),
+                        _buildSpecRow(
+                          'Shipping info',
+                          product.shippingInformation,
+                        ),
                         _buildSpecRow('Return policy', product.returnPolicy),
-                        _buildSpecRow('Min. Order Qty', '${product.minimumOrderQuantity} units'),
+                        _buildSpecRow(
+                          'Min. Order Qty',
+                          '${product.minimumOrderQuantity} units',
+                        ),
                       ],
                       theme: theme,
                     ),
@@ -377,7 +423,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         // insets (status bar height) as padding.
                         padding: EdgeInsets.only(top: 8.h),
                         itemCount: product.reviews.length,
-                        separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 12.h),
                         itemBuilder: (context, index) {
                           final review = product.reviews[index];
                           return Card(
@@ -386,7 +433,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r),
                               side: BorderSide(
-                                color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                                color: isDark
+                                    ? AppColors.darkBorder
+                                    : AppColors.lightBorder,
                               ),
                             ),
                             child: Padding(
@@ -395,7 +444,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
                                         child: CustomText(
@@ -413,8 +463,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             color: starIdx < review.rating
                                                 ? AppColors.ember
                                                 : (isDark
-                                                    ? AppColors.darkMuted
-                                                    : AppColors.lightMuted),
+                                                      ? AppColors.darkMuted
+                                                      : AppColors.lightMuted),
                                           ),
                                         ),
                                       ),
@@ -543,16 +593,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
           Expanded(
-            child: CustomText(
-              text: value,
-              fontSize: 13.sp,
-            ),
+            child: CustomText(text: value, fontSize: 13.sp),
           ),
         ],
       ),
     );
   }
-
 
   String _formatDate(String dateStr) {
     try {
@@ -578,7 +624,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Icon(
                 Icons.image,
                 size: 80.sp,
-                color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                color: isDark
+                    ? AppColors.darkSkeleton
+                    : AppColors.lightSkeleton,
               ),
             ),
           ),
@@ -592,7 +640,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   width: 100.w,
                   height: 20.h,
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                    color: isDark
+                        ? AppColors.darkSkeleton
+                        : AppColors.lightSkeleton,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -602,7 +652,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   width: 250.w,
                   height: 24.h,
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                    color: isDark
+                        ? AppColors.darkSkeleton
+                        : AppColors.lightSkeleton,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -612,7 +664,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   width: 80.w,
                   height: 24.h,
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                    color: isDark
+                        ? AppColors.darkSkeleton
+                        : AppColors.lightSkeleton,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -624,7 +678,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       width: 18.w,
                       height: 18.h,
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                        color: isDark
+                            ? AppColors.darkSkeleton
+                            : AppColors.lightSkeleton,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -633,7 +689,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       width: 120.w,
                       height: 14.h,
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                        color: isDark
+                            ? AppColors.darkSkeleton
+                            : AppColors.lightSkeleton,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),
@@ -649,7 +707,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   width: 100.w,
                   height: 16.h,
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                    color: isDark
+                        ? AppColors.darkSkeleton
+                        : AppColors.lightSkeleton,
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
@@ -664,7 +724,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         width: double.infinity,
                         height: 14.h,
                         decoration: BoxDecoration(
-                          color: isDark ? AppColors.darkSkeleton : AppColors.lightSkeleton,
+                          color: isDark
+                              ? AppColors.darkSkeleton
+                              : AppColors.lightSkeleton,
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                       ),
@@ -680,7 +742,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     color: theme.cardTheme.color,
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
-                      color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                      color: isDark
+                          ? AppColors.darkBorder
+                          : AppColors.lightBorder,
                     ),
                   ),
                 ),
