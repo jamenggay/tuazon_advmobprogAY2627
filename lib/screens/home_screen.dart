@@ -8,9 +8,8 @@ import '../constants.dart';
 import '../widgets/custom_text.dart';
 
 class HomeScreen extends StatefulWidget {
-  // Main screen with shop, cart, and profile tabs.
+  // Main screen 
   final String username;
-
   const HomeScreen({super.key, this.username = ''});
 
   @override
@@ -32,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Read the current color theme settings
+    // Read the color theme settings
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final onAppBar = theme.appBarTheme.foregroundColor ?? Colors.white;
@@ -76,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
 
-        //chat icon navigation -> floating icon
+        //chat icon navigation to floating icon
         floatingActionButton: _selectedIndex == _cartPageIndex
             ? null
             : FloatingActionButton(
@@ -113,7 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Placeholder action for the floating chat button.
   void _onChatPressed() {}
 
   // Switches the selected tab and updates the visible page.

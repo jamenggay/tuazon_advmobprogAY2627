@@ -15,10 +15,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // talks to the API
   final CartService _cartService = CartService();
-  // ENHANCEMENT 3
-  // used user service to load the specific user's own cart
   final UserService _userService = UserService();
 
   // stores the cart items from the API.
@@ -29,7 +26,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-    // Gets the cart when the screen opens
+    // loads the cart when the screen opens
     _loadUserCart();
   }
 
@@ -41,7 +38,6 @@ class _CartScreenState extends State<CartScreen> {
     });
 
     try {
-      // Read the saved user first, then use their id to get their cart.
       final user = await _userService.getUser();
       final carts = await _cartService.getCartsByUserId(user.id);
       if (!mounted) return;

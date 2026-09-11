@@ -9,7 +9,6 @@ class ProductCategory {
     required this.url,
   });
   // Supports category objects returned by the API.
-
   factory ProductCategory.fromJson(dynamic json) {
     if (json is String) {
       return ProductCategory(

@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _goToHome();
   }
 
-  //automatic timer for splash screen then proceed to homescreen
+  //automatic timer for splash screen 
   Future<void> _goToHome() async {
     // Change the number here if you want a shorter or longer splash
     await Future<void>.delayed(const Duration(seconds: 5));

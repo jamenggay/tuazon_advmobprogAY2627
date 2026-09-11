@@ -13,7 +13,7 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  // Stores the selected product and loading state for the detail page.
+  // stores the selected product and loading state for the detail page
   final ProductService _productService = ProductService();
   Product? _product;
   bool _isLoading = true;
@@ -32,7 +32,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
-  // Loads one product based on the ID passed from the previous screen.
+  // loads one product based on the ID passed from the previous screen.
   Future<void> _loadProductDetails(int id) async {
     setState(() {
       _isLoading = true;
@@ -136,7 +136,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      // The Add to Cart pinned at bottom of the screen
+      //add to cart button
       bottomNavigationBar: _buildAddToCartBar(product, theme, isDark),
       body: CustomScrollView(
         slivers: [
@@ -246,7 +246,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                     ),
                   ),
-                  // Gradient Overlay for readability
+                  // Gradient Overlay 
                   Positioned.fill(
                     child: DecoratedBox(
                       decoration: BoxDecoration(
@@ -419,8 +419,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        // Without this, ListView inherits MediaQuery's top/bottom
-                        // insets (status bar height) as padding.
                         padding: EdgeInsets.only(top: 8.h),
                         itemCount: product.reviews.length,
                         separatorBuilder: (context, index) =>

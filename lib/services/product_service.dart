@@ -6,19 +6,19 @@ import '../constants.dart';
 import '../models/product.dart';
 import '../models/product_category.dart';
 
-// Fetches product data from the backend API.
+// fetches product data from API.
 class ProductService {
-  // Loads all products.
+  // loads all products.
   Future<List<Product>> getAllProducts() async {
     return _getProducts(Uri.parse('$host/products'));
   }
 
-  // Loads products in a category.
+  // loads products in a category.
   Future<List<Product>> getProductsByCategory(String slug) async {
     return _getProducts(Uri.parse('$host/products/category/$slug'));
   }
 
-  // Loads product categories.
+  // loads product categories.
   Future<List<ProductCategory>> getCategories() async {
     final response = await http.get(Uri.parse('$host/products/categories'));
 
@@ -37,7 +37,7 @@ class ProductService {
         .toList();
   }
 
-  // Downloads and parses a product list.
+  // downloads and parses a product list.
   Future<List<Product>> _getProducts(Uri uri) async {
     final response = await http.get(uri);
 
@@ -61,7 +61,7 @@ class ProductService {
         .toList();
   }
 
-  // Loads one product by ID.
+  // loads one product by ID.
   Future<Product> getProductById(int id) async {
     final response = await http.get(Uri.parse('$host/products/$id'));
 

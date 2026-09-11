@@ -27,7 +27,7 @@ class TuazonAdvMobProg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // App-wide theme and route setup for the whole application.
+    // app-wide theme and route setup 
     return ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: ScreenUtilInit(
@@ -43,7 +43,7 @@ class TuazonAdvMobProg extends StatelessWidget {
             darkTheme: themeModel.darkTheme,
             themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
             title: 'NU Online Shopping Center',
-            // Start at sign-in to check the saved session.
+            // start at sign-in to check the saved session.
             initialRoute: '/signin',
             routes: {
               '/home': (context) => const HomeScreen(),

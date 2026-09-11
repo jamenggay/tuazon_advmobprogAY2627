@@ -16,16 +16,13 @@ class CartService {
     }
   }
 
-  // Loads carts for one user.
+  // loads carts for signed in user.
   Future<List<Cart>> getCartsByUserId(int userId) async {
-    // Uses the saved user's ID.
     final response = await http.get(Uri.parse('$host/carts/user/$userId'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load user cart');
     }
-
-    // Converts the response to a map.
     final Map<String, dynamic> data = jsonDecode(response.body);
     final List cartsJson = data['carts'] ?? [];
     return cartsJson.map((json) => Cart.fromJson(json)).toList();

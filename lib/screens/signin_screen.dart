@@ -11,9 +11,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  // restrictions, need to username and pass to be filled up
+  // restrictions, need username and pass to be filled up
   final _formKey = GlobalKey<FormState>();
-  // Controllers
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   // login API
@@ -25,7 +24,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void initState() {
     super.initState();
-    // Checks if the device already has a saved login
+    // checks if the device already has a saved login
     _checkExistingLogin();
   }
 
@@ -50,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void dispose() {
-    // Clean up the controllers 
+    // Clean up the text fields
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -67,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
         _passwordController.text.trim(),
       );
       if (!mounted) return;
-      //splash screen triggers
+      //triggers splash screen 
       Navigator.pushReplacementNamed(context, '/splash');
     } catch (e) {
       debugPrint('SIGN IN FAILED: $e');
@@ -83,7 +82,6 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       );
     } finally {
-      // Hide the spinner whether the login worked or not
       if (mounted) setState(() => _isLoading = false);
     }
   }
@@ -100,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     }
 
-//sign in screen UI structure
+//sign in screen 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
@@ -205,9 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           SizedBox(height: 24.h),
                           SizedBox(
                             height: 48.h,
-                            child: ElevatedButton(
-                              // Turned off while loading so the user cannot
-                              // press it twice
+                            child: ElevatedButton(          
                               onPressed: _isLoading ? null : _login,
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -234,7 +230,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  //username and pass field design
+  //username and pass field 
   InputDecoration _buildFieldDecoration({
     required String label,
     required IconData icon,

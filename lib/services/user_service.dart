@@ -27,7 +27,7 @@ class UserService {
     }
   }
 
-  /// Saves user data on the device.
+  /// saves user data on the device.
   Future<void> saveUserData(Map<String, dynamic> userData) async {
     final prefs = await SharedPreferences.getInstance();
     final user = User.fromJson(userData);
@@ -42,7 +42,7 @@ class UserService {
     await prefs.setString('accessToken', user.accessToken);
     await prefs.setString('refreshToken', user.refreshToken);
 
-    // Save the available authentication token.
+    // save the available authentication token.
     if (userData.containsKey('token')) {
       await prefs.setString('token', userData['token'] ?? '');
     } else if (user.accessToken.isNotEmpty) {
@@ -50,7 +50,7 @@ class UserService {
     }
   }
 
-  /// Reads saved user data.
+  /// reads saved user data.
   Future<Map<String, dynamic>> getUserData() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -70,13 +70,13 @@ class UserService {
     };
   }
 
-  /// Builds a user from saved data.
+  /// builds a user from saved data.
   Future<User> getUser() async {
     final userData = await getUserData();
     return User.fromJson(userData);
   }
 
-  /// Checks whether a user is signed in.
+  /// checks whether a user is signed in.
   Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     final token =
@@ -84,7 +84,7 @@ class UserService {
     return token != null && token.isNotEmpty;
   }
 
-  /// Removes saved user data.
+  /// removes saved user data.
   Future<void> logout() async {
     try {
       final prefs = await SharedPreferences.getInstance();

@@ -13,7 +13,7 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  // Holds the product list and fetch state for the catalog screen.
+  // holds the product list and fetch state for the catalog screen.
   final ProductService _productService = ProductService();
 
   List<Product> _allProducts = [];
@@ -205,7 +205,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  // Shows one product in a card with image, rating, and price.
+  // shows one product in a card with image, rating, and price.
   Widget _buildProductCard(BuildContext context, Product product, ThemeData theme, bool isDark) {
     return Card(
       elevation: 0,
@@ -264,13 +264,13 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
             ),
 
-            // Text Info
+            // text info
             Padding(
               padding: EdgeInsets.all(10.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Tag showing the brand name or product category
+                  // tag showing the brand name or product category
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                     decoration: BoxDecoration(
@@ -297,7 +297,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   SizedBox(height: 4.h),
-                  // Show the star icon, average rating, and count of reviews
+                  // show the star icon, average rating, and count of reviews
                   Row(
                     children: [
                       Icon(
@@ -337,7 +337,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  // Builds a skeleton loading screen
+  // builds a skeleton loading screen
   Widget _buildSkeletonGrid(bool isDark) {
     return GridView.builder(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -376,28 +376,24 @@ class _ProductScreenState extends State<ProductScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Placeholder for brand / category tag
                     Container(
                       width: 50.w,
                       height: 10.h,
                       color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
                     ),
                     SizedBox(height: 8.h),
-                    // Placeholder for product title (first line)
                     Container(
                       width: 120.w,
                       height: 12.h,
                       color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
                     ),
                     SizedBox(height: 4.h),
-                    // Placeholder for product title (second line)
                     Container(
                       width: 80.w,
                       height: 12.h,
                       color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
                     ),
                     SizedBox(height: 12.h),
-                    // Placeholder for product price
                     Container(
                       width: 60.w,
                       height: 14.h,

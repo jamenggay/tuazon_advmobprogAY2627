@@ -23,7 +23,6 @@ class CustomText extends StatelessWidget {
   final TextAlign textAlign;
   final String fontFamily;
   final FontStyle fontStyle;
-  // Optional text color.
   final Color? color;
 
   @override

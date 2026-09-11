@@ -5,7 +5,6 @@ import '../models/user.dart';
 import '../services/user_service.dart';
 import '../widgets/custom_text.dart';
 
-// This screen shows the data of the user who signed in using UserService
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -27,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _loadUser();
   }
 
-  // Gets the saved user and turns it into a User model
+  // gets the saved user and turns it into a user model
   Future<void> _loadUser() async {
     setState(() {
       _isLoading = true;
@@ -41,11 +40,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-    // logout function to erases all the saved user data on the phone
+    // logout function 
   Future<void> _logout() async {
     await _userService.logout();
     if (!mounted) return;
-    //navigated back to signin screen
     Navigator.pushReplacementNamed(context, '/signin');
   }
 
@@ -54,7 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // Still reading the saved data
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -71,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
 
-//layour/structure of the profile screen
+//structure of the profile screen
     return SingleChildScrollView(
       child: Column(
         children: [
