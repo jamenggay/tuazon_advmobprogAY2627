@@ -48,3 +48,17 @@ UserService also handles login persistence. isLoggedIn() checks if a token exist
 
 
 
+# Laboratory Activity 5
+Both login methods start from the **same sign-in screen**, where the user selects their preferred login method using a chip. **DummyJSON** uses I to manually send the username and password to *dummyjson.com/auth/login* through a *POST* request, then saves the returned token and user information. **Firebase** uses *signIn()*, which calls *signInWithEmailAndPassword()* and lets Firebase handle the authentication and network request. Sign-up is only available with Firebase because *createAccount()* creates a real account, sets the username as the display name, and saves additional information such as age and contact number. DummyJSON's */users/add* endpoint does not actually save new users, so it cannot be used for real account creation.
+
+Both methods are handled through ***UserService***, which acts as a single gateway for authentication. Instead of each screen directly calling the API or Firebase, the screens simply call methods from *UserService*. After login, both methods follow the same process:
+
+* Save the user's information using *saveUserData()* and SharedPreferences
+* Save a *loginType* to identify whether the user came from DummyJSON or Firebase
+* Navigate to the splash screen and then the home screen
+
+Because both providers use the same saved data structure, *getUserData()* works regardless of the login method. Firebase also provides real account features such as **sign-up, username and password changes, account deletion, persistent sessions, automatic token management, and secure password handling**, while DummyJSON mainly serves as a way to demonstrate API-based login.
+
+
+
+    
