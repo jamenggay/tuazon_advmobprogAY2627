@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +11,7 @@ import 'screens/product_detail_screen.dart';
 import 'screens/signin_screen.dart';
 import 'screens/splash_screen.dart';
 import 'poviders/theme_provider.dart';
+import 'firebase_options.dart';
 
 void main() async {
   // Start the app with required device settings and environment setup.
@@ -19,6 +21,12 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   await dotenv.load(fileName: 'assets/.env');
+
+  // Firebase must be ready before any FirebaseAuth call.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const TuazonAdvMobProg());
 }
 
