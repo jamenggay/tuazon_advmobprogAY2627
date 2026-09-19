@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
 import '../services/user_service.dart';
 import '../widgets/custom_text.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -11,7 +12,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  // restrictions, need username and pass to be filled up
+  // restrictions
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -20,6 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _isCheckingLogin = true;
+  bool _useFirebase = false;
 
   @override
   void initState() {
@@ -61,12 +63,21 @@ class _SignInScreenState extends State<SignInScreen> {
 
     setState(() => _isLoading = true);
     try {
-      await _userService.loginUser(
-        _usernameController.text.trim(),
-        _passwordController.text.trim(),
-      );
+      if (_useFirebase) {
+        // firebase auth uses the sdk and an email address.
+        await _userService.signIn(
+          email: _usernameController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+      } else {
+        // dummyjson uses the api call with a username.
+        await _userService.loginUser(
+          _usernameController.text.trim(),
+          _passwordController.text.trim(),
+        );
+      }
       if (!mounted) return;
-      //triggers splash screen 
+      //triggers splash screen
       Navigator.pushReplacementNamed(context, '/splash');
     } catch (e) {
       debugPrint('SIGN IN FAILED: $e');
@@ -74,11 +85,12 @@ class _SignInScreenState extends State<SignInScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: CustomText(
-            text: 'Unable to sign in.\n$e',
+            // shows a clear reason instead of the raw error.
+            text: UserService.friendlyError(e),
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
           ),
-          duration: const Duration(seconds: 8),
+          duration: const Duration(seconds: 4),
         ),
       );
     } finally {
@@ -98,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
       );
     }
 
-//sign in screen 
+//sign in screen
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
@@ -108,9 +120,11 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset(
-                  'assets/images/nubdexchange_logo.png',
-                  width: 160.w,
+                Center(
+                  child: Image.asset(
+                    'assets/images/nubdexchange_logo.png',
+                    width: 130.w,
+                  ),
                 ),
                 SizedBox(height: 16.h),
                 CustomText(
@@ -145,23 +159,34 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          // lets the user pick which login to use.
+                          _buildLoginTypePicker(theme, isDark),
+                          SizedBox(height: 16.h),
                           TextFormField(
                             controller: _usernameController,
                             textInputAction: TextInputAction.next,
+                            keyboardType: _useFirebase
+                                ? TextInputType.emailAddress
+                                : TextInputType.text,
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 14.sp,
                             ),
                             decoration: _buildFieldDecoration(
-                              label: 'Username',
-                              icon: Icons.person_outline,
+                              // firebase signs in with an email then dummyjson with a username.
+                              label: _useFirebase ? 'Email address' : 'Username',
+                              icon: _useFirebase
+                                  ? Icons.alternate_email
+                                  : Icons.person_outline,
                               theme: theme,
                               isDark: isDark,
                             ),
-                            // Shows a red message if the field is empty
+                            // shows a red message if the field is empty
                             validator: (value) =>
                                 value == null || value.trim().isEmpty
-                                    ? 'Enter your username'
+                                    ? _useFirebase
+                                        ? 'Enter your email address'
+                                        : 'Enter your username'
                                     : null,
                           ),
                           SizedBox(height: 16.h),
@@ -202,8 +227,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           SizedBox(height: 24.h),
                           SizedBox(
-                            height: 48.h,
-                            child: ElevatedButton(          
+                            height: 40.h,
+                            child: ElevatedButton(
                               onPressed: _isLoading ? null : _login,
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -222,6 +247,31 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 16.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: 'No account yet? ',
+                      fontSize: 15.sp,
+                      color:
+                          isDark ? AppColors.darkMuted : AppColors.lightMuted,
+                    ),
+                    GestureDetector(
+                      onTap: _isLoading
+                          ? null
+                          : () => Navigator.pushNamed(context, '/signup'),
+                      child: CustomText(
+                        text: 'Sign Up',
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.primary,
+                        // underline shows that it can be tapped.
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -230,7 +280,48 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  //username and pass field 
+  // two buttons that switch between dummyjson and firebase.
+  Widget _buildLoginTypePicker(ThemeData theme, bool isDark) {
+    return Row(
+      children: [
+        Expanded(
+          child: ChoiceChip(
+            label: CustomText(
+              text: 'DummyJSON',
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.center,
+              color: !_useFirebase
+                  ? theme.colorScheme.onPrimaryContainer
+                  : (isDark ? AppColors.darkMuted : AppColors.lightMuted),
+            ),
+            selected: !_useFirebase,
+            selectedColor: theme.colorScheme.primaryContainer,
+            onSelected: (_) => setState(() => _useFirebase = false),
+          ),
+        ),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: ChoiceChip(
+            label: CustomText(
+              text: 'Firebase',
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.center,
+              color: _useFirebase
+                  ? theme.colorScheme.onPrimaryContainer
+                  : (isDark ? AppColors.darkMuted : AppColors.lightMuted),
+            ),
+            selected: _useFirebase,
+            selectedColor: theme.colorScheme.primaryContainer,
+            onSelected: (_) => setState(() => _useFirebase = true),
+          ),
+        ),
+      ],
+    );
+  }
+
+  //username and pass field
   InputDecoration _buildFieldDecoration({
     required String label,
     required IconData icon,

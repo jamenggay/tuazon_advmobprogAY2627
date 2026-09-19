@@ -13,6 +13,8 @@ class CustomText extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.color,
+    // lets a text be underlined, used by the sign up link.
+    this.decoration,
   });
 
   final String text;
@@ -24,6 +26,7 @@ class CustomText extends StatelessWidget {
   final String fontFamily;
   final FontStyle fontStyle;
   final Color? color;
+  final TextDecoration? decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,9 @@ class CustomText extends StatelessWidget {
         fontStyle: fontStyle,
         letterSpacing: letterSpacing,
         color: color,
+        decoration: decoration,
+        // keeps the underline the same color as the text.
+        decorationColor: color,
       ),
     );
   }

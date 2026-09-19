@@ -9,6 +9,10 @@ class User {
     required this.image,
     required this.accessToken,
     required this.refreshToken,
+    // extra sign up fields, optional so the old code still works.
+    this.age = 0,
+    this.contactNo = '',
+    this.loginType = '',
   });
 
   final int id;
@@ -20,6 +24,9 @@ class User {
   final String image;
   final String accessToken;
   final String refreshToken;
+  final int age;
+  final String contactNo;
+  final String loginType;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -32,6 +39,9 @@ class User {
       image: json['image'] as String? ?? '',
       accessToken: json['accessToken'] as String? ?? '',
       refreshToken: json['refreshToken'] as String? ?? '',
+      age: json['age'] as int? ?? 0,
+      contactNo: json['contactNo'] as String? ?? json['phone'] as String? ?? '',
+      loginType: json['loginType'] as String? ?? '',
     );
   }
 

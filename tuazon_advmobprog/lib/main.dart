@@ -9,6 +9,7 @@ import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/product_detail_screen.dart';
 import 'screens/signin_screen.dart';
+import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
 import 'poviders/theme_provider.dart';
 import 'firebase_options.dart';
@@ -58,6 +59,8 @@ class TuazonAdvMobProg extends StatelessWidget {
               '/settings': (context) => const SettingsScreen(),
               '/product-detail': (context) => const ProductDetailScreen(),
               '/signin': (context) => const SignInScreen(),
+              // new account screen.
+              '/signup': (context) => const SignUpScreen(),
               '/splash': (context) => const SplashScreen(),
             },
           );
