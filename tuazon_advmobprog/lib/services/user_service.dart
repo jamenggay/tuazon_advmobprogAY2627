@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,9 @@ class UserService {
   static const String loginTypeFirebase = 'firebase';
 
   final fb_auth.FirebaseAuth firebaseAuth = fb_auth.FirebaseAuth.instance;
+
+  // the chat list reads its users from here.
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // turns an error into a short message the user can understand.
   static String friendlyError(Object error) {
@@ -90,6 +95,64 @@ class UserService {
       return data;
     } else {
       throw Exception(response.body);
+    }
+  }
+
+  // saves the profile in firestore so other users can find it in the chat list.
+  Future<void> saveUserToFirestore({
+    required String uid,
+    required String email,
+    String firstName = '',
+    String lastName = '',
+    String username = '',
+    int age = 0,
+    String contactNo = '',
+  }) async {
+    if (uid.isEmpty) return;
+
+    // only the fields that actually have a value are written, so a blank
+    // one can never erase details that are already saved.
+    final data = <String, dynamic>{'uid': uid};
+
+    if (email.isNotEmpty) data['email'] = email;
+    if (firstName.isNotEmpty) data['firstName'] = firstName;
+    if (lastName.isNotEmpty) data['lastName'] = lastName;
+    if (username.isNotEmpty) data['username'] = username;
+    // logging out wipes the device, so these are kept here as well.
+    if (age > 0) data['age'] = age;
+    if (contactNo.isNotEmpty) data['contactNo'] = contactNo;
+
+    try {
+      // the document id is the uid so a user can never be added twice.
+      await firestore
+          .collection('Users')
+          .doc(uid)
+          .set(data, SetOptions(merge: true));
+    } catch (e) {
+      // shows the real reason instead of failing quietly.
+      debugPrint('FIRESTORE SAVE FAILED: $e');
+      rethrow;
+    }
+  }
+
+  // reads the profile back out of firestore.
+  Future<Map<String, dynamic>> getUserFromFirestore(String uid) async {
+    if (uid.isEmpty) return {};
+
+    try {
+      final doc = await firestore.collection('Users').doc(uid).get();
+
+      if (!doc.exists) {
+        debugPrint('FIRESTORE READ: no Users document for uid $uid');
+        return {};
+      }
+
+      debugPrint('FIRESTORE READ: ${doc.data()}');
+      return doc.data() ?? {};
+    } catch (e) {
+      // a missing profile should never block the login.
+      debugPrint('FIRESTORE READ FAILED: $e');
+      return {};
     }
   }
 
@@ -204,18 +267,55 @@ class UserService {
     // keep whatever profile details were saved before this sign in.
     final saved = await getUserData();
 
+    final uid = credential.user?.uid ?? '';
+
+    // logging out clears the device, so the details are read back from
+    // firestore instead of coming back empty.
+    final stored = await getUserFromFirestore(uid);
+
+    // the stored copy wins, the device copy is only the fallback.
+    String pick(String key) {
+      final storedValue = (stored[key] ?? '').toString();
+      if (storedValue.isNotEmpty) return storedValue;
+      return (saved[key] ?? '').toString();
+    }
+
+    final storedAge = stored['age'];
+    final age = (storedAge is int && storedAge > 0)
+        ? storedAge
+        : (saved['age'] as int? ?? 0);
+
+    // firebase is the source of truth for the display name.
+    final displayName = credential.user?.displayName ?? '';
+    final username = displayName.isNotEmpty ? displayName : pick('username');
+
+    final firstName = pick('firstName');
+    final lastName = pick('lastName');
+    final contactNo = pick('contactNo');
+
+    // makes sure older accounts also end up in the chat list.
+    await saveUserToFirestore(
+      uid: uid,
+      email: credential.user?.email ?? email,
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      age: age,
+      contactNo: contactNo,
+    );
+
     await saveUserData({
       'id': saved['id'],
-      'username': credential.user?.displayName ?? saved['username'],
+      'username': username,
       'email': credential.user?.email ?? '',
-      'firstName': saved['firstName'],
-      'lastName': saved['lastName'],
+      'firstName': firstName,
+      'lastName': lastName,
       'gender': saved['gender'],
       'image': credential.user?.photoURL ?? '',
       'accessToken': token,
       'refreshToken': '',
-      'age': saved['age'],
-      'contactNo': saved['contactNo'],
+      'age': age,
+      'contactNo': contactNo,
       'loginType': loginTypeFirebase,
     });
 
@@ -243,6 +343,17 @@ class UserService {
     }
 
     final token = await credential.user?.getIdToken() ?? '';
+
+    // the chat list needs the new user in firestore, not just in auth.
+    await saveUserToFirestore(
+      uid: credential.user?.uid ?? '',
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      age: age,
+      contactNo: contactNo,
+    );
 
     // the rest of the sign up fields are saved on the device.
     await saveUserData({

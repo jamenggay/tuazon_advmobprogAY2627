@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'cart_screen.dart';
+import 'chat_screen.dart';
 import 'product_screen.dart';
 import 'profile_screen.dart';
 import '../constants.dart';
@@ -112,7 +113,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _onChatPressed() {}
+  // opens the chat list.
+  void _onChatPressed() {
+    final theme = Theme.of(context);
+    final onAppBar = theme.appBarTheme.foregroundColor ?? Colors.white;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: CustomText(
+              text: 'Chat',
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w600,
+              color: onAppBar,
+            ),
+          ),
+          body: const ChatScreen(),
+        ),
+      ),
+    );
+  }
 
   // Switches the selected tab and updates the visible page.
   void _onTappedBar(int value) {
